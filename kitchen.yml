@@ -1,0 +1,29 @@
+---
+driver:
+  name: azurerm
+  subscription_id: '014f3703-3490-4171-aac7-1a419bff7a44'
+  location: 'East US'
+  machine_size: 'Standard_D2_V3'
+  network_security_group: 'Abinash-Linux-Test-nsg'
+
+provisioner:
+  name: chef_infra
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: Linux
+    driver:
+      image_urn: RedHat:RHEL:7-LVM:latest
+    transport:
+      name: ssh
+      username: azureuser
+      ssh_key: ~/Users/abprusty/Downloads/Abinash-Linux-Azure.pem
+      elevated: true
+
+suites:
+  - name: default
+    run_list:
+      - recipe[my_cookbook::default]
+    attributes:

@@ -1,0 +1,24 @@
+---
+driver:
+  name: docker
+provisioner:
+  name: chef_zero
+  always_update_cookbooks: true
+verifier:
+  name: inspec
+platforms:
+  - name: ubuntu
+  - name: centos
+    driver_config:
+      image: centos:7
+      platform: centos
+transport:
+  name: docker
+suites:
+  - name: default
+    run_list:
+      - recipe[file::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
